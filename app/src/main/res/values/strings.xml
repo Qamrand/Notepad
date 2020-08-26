@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Notepad</string>
+
+
+    <string name="category_notes">Category</string>
+    <string name="search_notes">Search</string>
+    <string name="add_notes">Add Note</string>
+    <string name="favourite_notes">Favourite</string>
+    <string name="sort_notes">Sort</string>
+
+
+    <string-array name="notes_string">
+        <item>Richmond</item>
+        <item>Kew Gardens</item>
+        <item>Gunnersburry</item>
+        <item>Ealing Broadway</item>
+        <item>Ealing Common</item>
+        <item>Acton Town</item>
+        <item>Chiswick Park</item>
+        <item>Turnham Green</item>
+        <item>Stamford Brook</item>
+        <item>Ravenscourt Park</item>
+        <item>Hammersmith</item>
+        <item>Barons Court</item>
+        <item>West Kensington</item>
+        <item>Wimbledon</item>
+        <item>Wimbledon Park</item>
+        <item>Southfields</item>
+        <item>East Putney</item>
+        <item>Putney Bridge</item>
+        <item>Parsons Green</item>
+    </string-array>
 </resources>

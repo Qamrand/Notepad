@@ -20,13 +20,14 @@
         android:id="@+id/menu_bottom_add"
         android:enabled="true"
         android:icon="@drawable/ic_add_note"
+
         android:title="@string/add_notes"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_bottom_favorite"
         android:enabled="true"
-        android:icon="@drawable/ic_favourite_note"
+        android:icon="@drawable/ic_favourite_note_border"
         android:title="@string/favourite_notes"
         app:showAsAction="ifRoom" />
 

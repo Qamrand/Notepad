@@ -3,37 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/toolbar_main"
+            layout="@layout/toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/main_fragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_note_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize">
+        android:background="@color/colorDarkGrey"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <include layout="@layout/fragment_note_list" />
-    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-
-        app:itemBackground="@color/colorDarkGrey"
+        app:itemIconSize="30dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemBackground="@color/colorBlackGrey"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
-        app:menu="@menu/menu_bottom"/>
+        app:itemHorizontalTranslationEnabled="true"
+        app:menu="@menu/menu_bottom" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

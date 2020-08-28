@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_page_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorDarkGrey"
+    android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".ui.activity.NotePageActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/note_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="New Categoty"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorDarkGreen"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/note_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="My new note"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/note_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/note_textview_back"
+        android:padding="16dp"
+        android:text="@string/appbar_scrolling_view_behavior"
+        android:textColor="@color/colorWhite" />
+
+
+</LinearLayout>

@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Notepad</string>
 
-
     <string name="category_notes">Category</string>
     <string name="search_notes">Search</string>
     <string name="add_notes">Add Note</string>
     <string name="favourite_notes">Favourite</string>
     <string name="sort_notes">Sort</string>
+    <string name="text_size">Text size</string>
+    <string name="delete_note">Delete</string>
+    <string name="edit_note">Edit</string>
 
 
     <string-array name="notes_string">

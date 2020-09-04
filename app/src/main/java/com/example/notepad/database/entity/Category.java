@@ -1,4 +1,4 @@
-package com.example.notepad.data;
+package com.example.notepad.database.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

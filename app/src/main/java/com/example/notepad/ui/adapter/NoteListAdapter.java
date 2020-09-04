@@ -13,11 +13,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notepad.R;
-import com.example.notepad.data.Note;
-import com.example.notepad.ui.activity.NotePageActivity;
+import com.example.notepad.database.entity.Note;
+import com.example.notepad.ui.activity.notepage.NotePageActivity;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +30,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     private Context mContext;
     private List<Note> mNoteList;
 
-    public NoteListAdapter(Context context, List<Note> noteList) {
+    @Inject
+    public NoteListAdapter(Context context) {
         mContext = context;
-        mNoteList = noteList;
+        mNoteList = new ArrayList<>();
     }
 
     @NonNull
@@ -49,9 +53,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
         holder.mTextNameItem.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, NotePageActivity.class);
-            intent.putExtra(NotePageActivity.EXTRA_NOTE_ID, position);
+            intent.putExtra(NotePageActivity.EXTRA_NOTE_ID, mNoteList.get(position).getMId());
             mContext.startActivity(intent);
         });
+
 
         holder.mImageFavouriteItem.setOnClickListener(view -> {
             if (mNoteList.get(position).getIsFavourite() == R.drawable.ic_favourite_note_border) {
@@ -67,6 +72,15 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     @Override
     public int getItemCount() {
         return mNoteList.size();
+    }
+
+    public void setData(List<Note> notes) {
+        mNoteList.addAll(notes);
+        notifyDataSetChanged();
+    }
+
+    public void clearData() {
+        mNoteList.clear();
     }
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {

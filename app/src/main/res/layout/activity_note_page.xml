@@ -8,7 +8,7 @@
     android:background="@color/colorDarkGrey"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".ui.activity.NotePageActivity">
+    tools:context=".ui.activity.notepage.NotePageActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,29 +25,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="New Categoty"
         android:textAlignment="textEnd"
         android:textColor="@color/colorDarkGreen"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="New Categoty" />
 
     <TextView
         android:id="@+id/note_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="My new note"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="My new note" />
 
-    <TextView
-        android:id="@+id/note_text"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/note_textview_back"
-        android:padding="16dp"
-        android:text="@string/appbar_scrolling_view_behavior"
-        android:textColor="@color/colorWhite" />
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/note_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp"
+            tools:text="@string/appbar_scrolling_view_behavior" />
+    </ScrollView>
 
 
 </LinearLayout>

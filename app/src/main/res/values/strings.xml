@@ -9,6 +9,8 @@
     <string name="text_size">Text size</string>
     <string name="delete_note">Delete</string>
     <string name="edit_note">Edit</string>
+    <string name="add_category">Add category</string>
+    <string name="save_note">Save</string>
 
 
     <string-array name="notes_string">
@@ -32,4 +34,11 @@
         <item>Putney Bridge</item>
         <item>Parsons Green</item>
     </string-array>
+
+
+    <!--Hint-->
+    <string name="hint_category_name">Category</string>
+    <string name="hint_category_text">Enter text</string>
+    <string name="autor_full_name">Maksym Honchar</string>
+    <string name="hint_text_name">Enter note</string>
 </resources>

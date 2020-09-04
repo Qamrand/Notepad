@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_note_text_size"
+        android:title="@string/text_size"
+        android:enabled="true"
+        android:icon="@drawable/ic_text_size"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_note_search"
+        android:title="@string/search_notes"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_note"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_note_delete"
+        android:title="@string/delete_note"
+        android:enabled="true"
+        android:icon="@drawable/ic_delete_note"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_note_edit"
+        android:title="@string/edit_note"
+        android:enabled="true"
+        android:icon="@drawable/ic_edit_note"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_note_favourite"
+        android:title="@string/favourite_notes"
+        android:enabled="true"
+        android:icon="@drawable/ic_favourite_note_border"
+        app:showAsAction="always"/>
+</menu>

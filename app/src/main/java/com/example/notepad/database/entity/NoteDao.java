@@ -22,6 +22,9 @@ public interface NoteDao {
     @Query("SELECT * FROM note WHERE category = (:category)")
     Flowable<List<Note>> getAllNoteByCategory(String category);
 
+    @Query("SELECT * FROM note WHERE favourite = 1")
+    Flowable<List<Note>> getFavouriteNotes();
+
     /**
     * Передача по ИД через интент гарантирует, что данная NOTE существует.
     * */

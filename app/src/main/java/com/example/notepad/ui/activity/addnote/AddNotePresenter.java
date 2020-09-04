@@ -16,6 +16,9 @@ import java.util.GregorianCalendar;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 public class AddNotePresenter implements AddNoteContract.Presenter {
 
     public static final String TAG = "ADD_NOTE_ACTIVITY";
@@ -41,6 +44,11 @@ public class AddNotePresenter implements AddNoteContract.Presenter {
         Note note = new Note(nameNote, descriptionTextNote, category, date, date);
 
         Log.d(TAG, "noteClass = " + note.toString());
+
+        Observable.just(note)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+
         mModel.addNote(note);
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

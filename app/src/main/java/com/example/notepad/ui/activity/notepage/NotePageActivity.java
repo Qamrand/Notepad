@@ -27,9 +27,11 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class NotePageActivity extends AppCompatActivity {
+public class NotePageActivity extends AppCompatActivity implements NotePageContract.View{
 
     public static final String EXTRA_NOTE_ID = "noteId";
+    private final String TAG = "NotePageActivity";
+    private NotePageComponent mNotePageComponent;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -58,19 +60,13 @@ public class NotePageActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        int idNote = getIntent().getExtras().getInt(EXTRA_NOTE_ID);
-        MyApplication.noteRepository.getNoteById(idNote)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        note -> {
-                            noteNameTextView.setText(note.getMName());
-                            noteCategoryTextView.setText(note.getMCategory());
-                            noteContentTextView.setText(note.getMText());
-                        },
-                        error -> Log.e("NotePageActivity", "getNoteById exception error"));
+        mNotePageComponent = MyApplication.appComponent.addNotePageComponent().build();
+        mNotePageComponent.inject(this);
 
-        MyApplication.appComponent.getNoteRepository().getAllNotes();
+        mPresenter.setView(this);
+
+        int idNote = getIntent().getExtras().getInt(EXTRA_NOTE_ID);
+        mPresenter.loadNoteData(idNote);
 
 
     }
@@ -93,16 +89,56 @@ public class NotePageActivity extends AppCompatActivity {
                 mPresenter.onClickSearch();
                 break;
             case R.id.menu_note_delete:
-                mPresenter.onCLickRemoveNote(this);
+                mPresenter.onCLickRemoveNote();
                 break;
             case R.id.menu_note_edit:
-                mPresenter.onClickEditText(this);
+                mPresenter.onClickEditText();
                 break;
             case R.id.menu_note_favourite:
-                mPresenter.onClickFavourite();
+                mPresenter.onClickFavourite(item);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        /*TODO set favourite item.
+        *
+        * if (!addedToFavorites) {
+        MenuItem mi = menu.findItem(R.id.ic_favorites_checked);
+        menu.removeItem(R.id.ic_favorites_checked);
+        mi.setIcon(R.drawable.ic_menu_favorites_unchecked);
+        mi.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        addedToFavorites = true;
+
+    } else {
+        MenuItem mi = menu.findItem(R.id.ic_favorites_unchecked);
+        menu.removeItem(R.id.ic_favorites_unchecked);
+        mi.setIcon(R.drawable.ic_menu_favorites_checked);
+        mi.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        addedToFavorites = false;
+        * */
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void showNoteData(Note note) {
+        noteNameTextView.setText(note.getMName());
+        noteCategoryTextView.setText(note.getMCategory());
+        noteContentTextView.setText(note.getMText());
+    }
+
+    @Override
+    public void loadMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void showError(String message) {
+        Log.e(TAG, message);
     }
 }

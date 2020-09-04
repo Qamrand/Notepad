@@ -9,8 +9,8 @@ import com.example.notepad.di.modules.AppModule;
 import com.example.notepad.di.modules.RoomModule;
 import com.example.notepad.di.scopes.ApplicationScoped;
 import com.example.notepad.ui.activity.addnote.AddNoteComponent;
-import com.example.notepad.ui.activity.category.CategoryActivity;
-import com.example.notepad.ui.activity.main.MainActivity;
+import com.example.notepad.ui.activity.category.CategoryComponent;
+import com.example.notepad.ui.activity.favourite.FavouriteComponent;
 import com.example.notepad.ui.activity.main.MainComponent;
 import com.example.notepad.ui.activity.notepage.NotePageComponent;
 import com.example.notepad.ui.activity.splash.SplashComponent;
@@ -38,5 +38,9 @@ public interface AppComponent {
     AddNoteComponent.Builder addNoteComponent();
 
     NotePageComponent.Builder addNotePageComponent();
+
+    FavouriteComponent.Builder addFavouriteComponent();
+
+    CategoryComponent.Builder addCategoryComponent();
 
 }

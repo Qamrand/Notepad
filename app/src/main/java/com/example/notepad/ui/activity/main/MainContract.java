@@ -22,8 +22,6 @@ public interface MainContract {
 
         void showError(String message);
 
-        void showComplete();
-
         void onResume();
     }
 }

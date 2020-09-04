@@ -32,6 +32,11 @@ public class NoteDataSource implements NoteRepository {
     }
 
     @Override
+    public Flowable<List<Note>> getFavouriteNotes() {
+        return mNoteDao.getFavouriteNotes();
+    }
+
+    @Override
     public Single<Note> getNoteById(int id) {
         return mNoteDao.getNoteById(id);
     }

@@ -20,6 +20,10 @@ public class AdapterModule {
         return new NoteListAdapter(context);
     }
 
-
+    @Provides
+    @ActivityScoped
+    public CategoryAdapter provideCategoryAdapter(Context context) {
+        return new CategoryAdapter(context, false);
+    }
 
 }

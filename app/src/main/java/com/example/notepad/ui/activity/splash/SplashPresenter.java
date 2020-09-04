@@ -11,7 +11,7 @@ public class SplashPresenter implements SplashContract.Presenter {
 
     private SplashContract.View mView;
 
-    private final long SPLASH_SCREEN_DELAY = 1500;
+    private final long SPLASH_SCREEN_DELAY = 500;
 
     public SplashPresenter() {
     }

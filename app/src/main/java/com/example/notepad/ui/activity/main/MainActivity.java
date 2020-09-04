@@ -40,13 +40,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     //Declaring variables through the ButterKnife library
     @BindView(R.id.toolbar_main)
     Toolbar mToolbar;
-
     @BindView(R.id.bottom_nav)
     BottomNavigationView mBottomNavigationView;
-
     @BindView(R.id.recycler_view_note_list)
     RecyclerView mRecyclerView;
-
     @BindView(R.id.text_toolbar_title)
     TextView toolbarName;
 
@@ -105,24 +102,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void addNoteRecyclerView() {
-        List<Note> list = new ArrayList<>();
-        for (int i = 0; i < 21; i++) {
-            list.add(new Note(i, "Note" + i, "asasd",
-                    R.drawable.ic_favourite_note_border, "Categ" + i,
-                    "ads", "dsaads"));
-        }
         //set fixed size for recyclerview
         mRecyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager;
-        //if the orientation is portrait - draw two columns in the GridLayoutManager
-        //if the orientation is landscape - three columns
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-            gridLayoutManager = new GridLayoutManager(mContextActivity, 2);
-        else
-            gridLayoutManager = new GridLayoutManager(mContextActivity, 4);
-
         //set GridLayoutManager in RecyclerView
-        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(mNoteListAdapter.setGridLayoutManager(this));
         //creating adapter class and set adapter in RecyclerView
         mRecyclerView.setAdapter(mNoteListAdapter);
     }
@@ -159,11 +142,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showError(String message) {
         Toast.makeText(mContextApplication, message, Toast.LENGTH_SHORT);
-    }
-
-    @Override
-    public void showComplete() {
-
     }
 
     @Override

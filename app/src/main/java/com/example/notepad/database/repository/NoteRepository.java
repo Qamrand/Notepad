@@ -13,6 +13,8 @@ public interface NoteRepository {
 
     Flowable<List<Note>> getAllNoteByCategory(String category);
 
+    Flowable<List<Note>> getFavouriteNotes();
+
     Single<Note> getNoteById(int id);
 
     void insertNote(Note note);

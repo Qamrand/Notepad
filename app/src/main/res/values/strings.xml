@@ -13,32 +13,12 @@
     <string name="save_note">Save</string>
 
 
-    <string-array name="notes_string">
-        <item>Richmond</item>
-        <item>Kew Gardens</item>
-        <item>Gunnersburry</item>
-        <item>Ealing Broadway</item>
-        <item>Ealing Common</item>
-        <item>Acton Town</item>
-        <item>Chiswick Park</item>
-        <item>Turnham Green</item>
-        <item>Stamford Brook</item>
-        <item>Ravenscourt Park</item>
-        <item>Hammersmith</item>
-        <item>Barons Court</item>
-        <item>West Kensington</item>
-        <item>Wimbledon</item>
-        <item>Wimbledon Park</item>
-        <item>Southfields</item>
-        <item>East Putney</item>
-        <item>Putney Bridge</item>
-        <item>Parsons Green</item>
-    </string-array>
-
-
     <!--Hint-->
     <string name="hint_category_name">Category</string>
     <string name="hint_category_text">Enter text</string>
     <string name="autor_full_name">Maksym Honchar</string>
     <string name="hint_text_name">Enter note</string>
+    <string name="add_category_title">Add category</string>
+    <string name="dialog_category_add">Add</string>
+    <string name="category_edit">EDIT</string>
 </resources>

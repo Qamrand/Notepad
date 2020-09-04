@@ -1,6 +1,7 @@
 package com.example.notepad.ui.activity.notepage;
 
 import android.content.Context;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.notepad.BaseContract;
@@ -25,13 +26,13 @@ public interface NotePageContract {
 
         void onClickSearch();
 
-        void onCLickRemoveNote(Context context);
+        void onCLickRemoveNote();
 
-        void onClickEditText(Context context);
+        void onClickEditText();
 
-        void onClickFavourite();
+        void onClickFavourite(MenuItem item);
 
-        void loadNoteData();
+        void loadNoteData(int id);
     }
 
     interface Model extends BaseContract.Model {

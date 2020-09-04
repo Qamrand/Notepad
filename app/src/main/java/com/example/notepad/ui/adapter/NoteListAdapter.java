@@ -2,6 +2,7 @@ package com.example.notepad.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notepad.R;
@@ -47,7 +49,11 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-        holder.mImageFavouriteItem.setImageResource(mNoteList.get(position).getIsFavourite());
+        if(mNoteList.get(position).getIsFavourite() == 0)
+            holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_border);
+        else
+            holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_full);
+
         holder.mTextCategoryItem.setText(mNoteList.get(position).getMCategory());
         holder.mTextNameItem.setText(mNoteList.get(position).getMName());
 
@@ -75,12 +81,24 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
     }
 
     public void setData(List<Note> notes) {
+        clearData();
         mNoteList.addAll(notes);
         notifyDataSetChanged();
     }
 
     public void clearData() {
         mNoteList.clear();
+    }
+
+    public GridLayoutManager setGridLayoutManager(Context context){
+        GridLayoutManager gridLayoutManager;
+        //if the orientation is portrait - draw two columns in the GridLayoutManager
+        //if the orientation is landscape - three columns
+        if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            gridLayoutManager = new GridLayoutManager(context, 2);
+        else
+            gridLayoutManager = new GridLayoutManager(context, 4);
+        return gridLayoutManager;
     }
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {

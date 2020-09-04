@@ -27,6 +27,7 @@ public class RoomModule {
     private NotepadDatabase mNotepadDatabase;
 
     public RoomModule(Application application) {
+        //TODO call on another thread
         mNotepadDatabase =
                 Room.databaseBuilder(application, NotepadDatabase.class, "notepad_db")
                         .allowMainThreadQueries()

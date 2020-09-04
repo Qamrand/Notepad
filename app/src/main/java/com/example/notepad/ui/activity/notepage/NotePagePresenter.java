@@ -1,15 +1,18 @@
 package com.example.notepad.ui.activity.notepage;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.notepad.BaseContract;
-import com.example.notepad.MyApplication;
+import com.example.notepad.R;
 import com.example.notepad.database.entity.Note;
-import com.example.notepad.ui.activity.main.MainActivity;
+
+import javax.inject.Inject;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class NotePagePresenter implements NotePageContract.Presenter {
 
@@ -19,6 +22,7 @@ public class NotePagePresenter implements NotePageContract.Presenter {
     boolean isLargeText = false;
     private Note mNote;
 
+    @Inject
     public NotePagePresenter(NotePageContract.Model model) {
         mModel = model;
     }
@@ -39,26 +43,40 @@ public class NotePagePresenter implements NotePageContract.Presenter {
     }
 
     @Override
-    public void onCLickRemoveNote(Context context) {
+    public void onCLickRemoveNote() {
         mModel.deleteNote(mNote);
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        context.startActivity(intent);
+        mView.loadMain();
     }
 
     @Override
-    public void onClickEditText(Context context) {
-
-    }
-
-    @Override
-    public void onClickFavourite() {
+    public void onClickEditText() {
 
     }
 
     @Override
-    public void loadNoteData() {
+    public void onClickFavourite(MenuItem item) {
+        int favoriteNote = mNote.getIsFavourite();
+        if(favoriteNote == 0) {
+            item.setIcon(R.drawable.ic_favourite_note_full);
+            favoriteNote = 1;
+        } else {
+            item.setIcon(R.drawable.ic_favourite_note_border);
+            favoriteNote = 0;
+        }
+        mNote.setIsFavourite(favoriteNote);
+        mModel.updateNote(mNote);
+    }
 
+    @Override
+    public void loadNoteData(int id) {
+        mModel.getNoteById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(note -> {
+                            mView.showNoteData(note);
+                            mNote = note;
+                        },
+                        error -> mView.showError(error.getMessage()));
     }
 
     @Override
@@ -70,4 +88,5 @@ public class NotePagePresenter implements NotePageContract.Presenter {
     public void dropView(Activity activity) {
         activity.finish();
     }
+
 }

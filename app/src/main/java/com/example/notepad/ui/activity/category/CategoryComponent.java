@@ -1,6 +1,5 @@
 package com.example.notepad.ui.activity.category;
 
-import com.example.notepad.database.entity.Category;
 import com.example.notepad.di.modules.ActivityModule;
 import com.example.notepad.di.scopes.ActivityScoped;
 import com.example.notepad.ui.adapter.AdapterModule;

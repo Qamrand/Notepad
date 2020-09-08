@@ -2,11 +2,8 @@ package com.example.notepad.ui.adapter;
 
 import android.content.Context;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.notepad.di.scopes.ActivityScoped;
-
-import javax.inject.Inject;
+import com.example.notepad.ui.activity.category.CategoryContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,8 +19,8 @@ public class AdapterModule {
 
     @Provides
     @ActivityScoped
-    public CategoryAdapter provideCategoryAdapter(Context context) {
-        return new CategoryAdapter(context, false);
+    public CategoryAdapter provideCategoryAdapter(Context context, CategoryContract.Presenter presenter) {
+        return new CategoryAdapter(context, false, presenter);
     }
 
 }

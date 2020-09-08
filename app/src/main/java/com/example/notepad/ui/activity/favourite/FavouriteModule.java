@@ -1,6 +1,5 @@
 package com.example.notepad.ui.activity.favourite;
 
-import com.example.notepad.BaseContract;
 import com.example.notepad.di.scopes.ActivityScoped;
 
 import dagger.Module;

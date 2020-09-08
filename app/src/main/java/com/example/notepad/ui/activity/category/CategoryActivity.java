@@ -1,31 +1,26 @@
 package com.example.notepad.ui.activity.category;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.TextView;
-
+import com.example.notepad.MyApplication;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Category;
-import com.example.notepad.database.entity.Note;
+import com.example.notepad.di.modules.ActivityModule;
 import com.example.notepad.ui.adapter.CategoryAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CategoryActivity extends AppCompatActivity implements CategoryContract.View{
+
+    private CategoryComponent mCategoryComponent;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -44,8 +41,14 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
     @BindView(R.id.text_toolbar_title)
     TextView mToolbarName;
 
+    @BindView(R.id.add_category_button)
+    Button mAddCategoryButton;
+
     @Inject
     CategoryAdapter categoryAdapter;
+
+    @Inject
+    CategoryContract.Presenter mPresenter;
 
 
     @Override
@@ -54,6 +57,16 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
         setContentView(R.layout.activity_category);
         //init butterknife
         ButterKnife.bind(this);
+
+        mCategoryComponent = MyApplication.appComponent
+                .addCategoryComponent()
+                .activityModule(new ActivityModule(this))
+                .build();
+
+        mCategoryComponent.inject(this);
+
+        mPresenter.setView(this);
+
         mToolbar.setNavigationIcon(R.drawable.ic_back);
         //set toolbar title
         mToolbarName.setText(R.string.category_notes);
@@ -61,9 +74,18 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
         setSupportActionBar(mToolbar);
         //set back button
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         addNoteRecyclerView();
+
+        mAddCategoryButton.setOnClickListener(click ->
+                mPresenter.addNewCategory(this, null));
+    }
+
+    public CategoryContract.Presenter getPresenter(){
+        return mPresenter;
     }
 
     private void addNoteRecyclerView() {
@@ -71,8 +93,8 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        LayoutAnimationController anim = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down);
-        mRecyclerView.setLayoutAnimation(anim);
+        /*LayoutAnimationController anim = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down);
+        mRecyclerView.setLayoutAnimation(anim);*/
         mRecyclerView.setAdapter(categoryAdapter);
     }
 
@@ -85,17 +107,9 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menu_edit_category:
-                if(item.getTitle().equals("EDIT")) {
-                    categoryAdapter = new CategoryAdapter(this, true);
-                    item.setTitle("SAVE");
-                } else {
-                    categoryAdapter = new CategoryAdapter(this, false);
-                    item.setTitle("EDIT");
-                }
-                mRecyclerView.setAdapter(categoryAdapter);
-                break;
+        if (item.getItemId() == R.id.menu_edit_category) {
+            categoryAdapter = mPresenter.changeEditButtonMenu(this, item, mAddCategoryButton);
+            mRecyclerView.setAdapter(categoryAdapter);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -118,5 +132,12 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.loadData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        categoryAdapter.clearData();
     }
 }

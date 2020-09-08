@@ -1,6 +1,5 @@
 package com.example.notepad.database.entity;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -26,15 +25,15 @@ public interface NoteDao {
     Flowable<List<Note>> getFavouriteNotes();
 
     /**
-    * Передача по ИД через интент гарантирует, что данная NOTE существует.
-    * */
+     * Передача по ИД через интент гарантирует, что данная NOTE существует.
+     */
     @Query("SELECT * FROM note WHERE id = (:id)")
     Single<Note> getNoteById(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNote(Note note);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateNote(Note note);
 
     @Delete

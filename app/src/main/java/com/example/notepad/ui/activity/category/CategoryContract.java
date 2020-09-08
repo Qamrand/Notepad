@@ -1,8 +1,12 @@
 package com.example.notepad.ui.activity.category;
 
+import android.content.Context;
+import android.view.MenuItem;
+import android.widget.Button;
+
 import com.example.notepad.BaseContract;
 import com.example.notepad.database.entity.Category;
-import com.example.notepad.database.entity.Note;
+import com.example.notepad.ui.adapter.CategoryAdapter;
 
 import java.util.List;
 
@@ -23,12 +27,20 @@ public interface CategoryContract {
     interface Presenter extends BaseContract.Presenter {
         void loadData();
 
-        void removeCategory(Category category);
+        void removeCategory(int categoryId);
+
+        void addNewCategory(CategoryActivity categoryActivity, Category category);
+
+        CategoryActivity getCategoryActivity();
+
+        CategoryAdapter changeEditButtonMenu(Context context, MenuItem item, Button mAddCategoryButton);
     }
 
     interface Model extends BaseContract.Model {
         Flowable<List<Category>> getAllCategories();
 
-        void deleteCategory(Category category);
+        void deleteCategory(int categoryId);
+
+        void insertCategory(Category category);
     }
 }

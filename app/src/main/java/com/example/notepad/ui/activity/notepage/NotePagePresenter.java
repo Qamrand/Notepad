@@ -1,6 +1,8 @@
 package com.example.notepad.ui.activity.notepage;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -8,9 +10,11 @@ import android.widget.TextView;
 import com.example.notepad.BaseContract;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Note;
+import com.example.notepad.ui.activity.addnote.AddNoteActivity;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -44,19 +48,38 @@ public class NotePagePresenter implements NotePageContract.Presenter {
 
     @Override
     public void onCLickRemoveNote() {
-        mModel.deleteNote(mNote);
-        mView.loadMain();
+        Completable.fromAction(() -> {
+            mModel.deleteNote(mNote);
+            mView.loadMain();
+        })
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override
-    public void onClickEditText() {
-
+    public void onClickEditText(Context context) {
+        Intent intent = new Intent(context, AddNoteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        /*intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS_ID,
+                new Object[]{
+                        mNote.getMId(),
+                        mNote.getMName(),
+                        mNote.getMText(),
+                        mNote.getIsFavourite(),
+                        mNote.getMCategory(),
+                        mNote.getMCreatingDate(),
+                        mNote.getMModifyDate()
+        });*/
+        intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS_ID, mNote);
+        intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS,
+                new String[]{mNote.getMName(), mNote.getMText()});
+        context.startActivity(intent);
     }
 
     @Override
     public void onClickFavourite(MenuItem item) {
         int favoriteNote = mNote.getIsFavourite();
-        if(favoriteNote == 0) {
+        if (favoriteNote == 0) {
             item.setIcon(R.drawable.ic_favourite_note_full);
             favoriteNote = 1;
         } else {
@@ -64,7 +87,9 @@ public class NotePagePresenter implements NotePageContract.Presenter {
             favoriteNote = 0;
         }
         mNote.setIsFavourite(favoriteNote);
-        mModel.updateNote(mNote);
+        Completable.fromAction(() -> mModel.updateNote(mNote))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override
@@ -76,7 +101,15 @@ public class NotePagePresenter implements NotePageContract.Presenter {
                             mView.showNoteData(note);
                             mNote = note;
                         },
-                        error -> mView.showError(error.getMessage()));
+                        error -> mView.showError(error.getMessage())).dispose();
+    }
+
+    @Override
+    public void setFavouriteIconMenu(MenuItem menuItem) {
+        if (mNote.getIsFavourite() == 0)
+            menuItem.setIcon(R.drawable.ic_favourite_note_border);
+        else
+            menuItem.setIcon(R.drawable.ic_favourite_note_full);
     }
 
     @Override

@@ -9,14 +9,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notepad.MyApplication;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Category;
 import com.example.notepad.database.entity.Note;
+import com.example.notepad.di.modules.ActivityModule;
+import com.example.notepad.ui.activity.category.CategoryActivity;
 import com.example.notepad.ui.activity.category.CategoryComponent;
 import com.example.notepad.ui.activity.category.CategoryContract;
 import com.example.notepad.ui.activity.main.MainActivity;
+import com.example.notepad.ui.fragment.DialogAddCategoryFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +30,22 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Completable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private Context mContext;
     private List<Category> mCategoryList;
     private boolean isVisibleEditButtons;
+    private CategoryContract.Presenter mPresenter;
 
     @Inject
-    CategoryContract.Presenter mPresenter;
-
-    @Inject
-    public CategoryAdapter(Context context, boolean isVisibleEditButtons) {
+    public CategoryAdapter(Context context, boolean isVisibleEditButtons, CategoryContract.Presenter presenter) {
         mContext = context;
         mCategoryList = new ArrayList<>();
         this.isVisibleEditButtons = isVisibleEditButtons;
+        mPresenter = presenter;
     }
 
     @NonNull
@@ -53,25 +59,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.mTextView.setText(mCategoryList.get(position).getMName());
-        if(isVisibleEditButtons) {
+
+        if (isVisibleEditButtons &&
+                !(mCategoryList.get(position).getMName().equals("All notes")
+                        || mCategoryList.get(position).getMName().equals("No category"))) {
             holder.mEditButton.setVisibility(View.VISIBLE);
             holder.mRemoveButton.setVisibility(View.VISIBLE);
         }
 
+        clickButtons(holder, position);
+    }
+
+    private void clickButtons(@NonNull CategoryViewHolder holder, int position) {
+
         holder.mTextView.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             //put category's name in intent
             intent.putExtra(MainActivity.EXTRA_CATEGORY_NAME, mCategoryList.get(position).getMName());
             mContext.startActivity(intent);
         });
 
-        holder.mRemoveButton.setOnClickListener(v -> {
-            mPresenter.removeCategory(mCategoryList.get(position));
-        });
+        holder.mRemoveButton.setOnClickListener(v -> Completable.fromAction(() ->
+                mPresenter.removeCategory(mCategoryList.get(position).getMId()))
+                .subscribeOn(Schedulers.io())
+                .subscribe());
 
-        holder.mEditButton.setOnClickListener(v -> {
-
-        });
+        holder.mEditButton.setOnClickListener(v ->
+                mPresenter.addNewCategory(mPresenter.getCategoryActivity(), mCategoryList.get(position)));
     }
 
     @Override
@@ -103,5 +119,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+
     }
 }

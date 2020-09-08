@@ -15,8 +15,9 @@ public interface MainComponent {
     @Subcomponent.Builder
     interface Builder {
         Builder mainModule(MainModule mainModule);
-        Builder activityModule(ActivityModule activityModule);
+
         Builder adapterModule(AdapterModule adapterModule);
+        Builder activityModule(ActivityModule activityModule);
         MainComponent build();
     }
 }

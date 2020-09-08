@@ -35,11 +35,20 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loadData() {
-        mModel.showAllNotes()
+        mModel.getAllNotes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Consumer<List<Note>>)
-                        notes -> mView.showData(notes),
-                        throwable -> mView.showError(throwable.toString()));
+                .subscribe(notes -> mView.showData(notes),
+                        throwable -> mView.showError(throwable.toString())).dispose();
     }
+
+    @Override
+    public void loadDataByCategory(String category) {
+        mModel.getAllNotesByCategory(category)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(notes -> mView.showData(notes),
+                        throwable -> mView.showError(throwable.toString())).dispose();
+    }
+
 }

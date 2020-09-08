@@ -2,10 +2,7 @@ package com.example.notepad.di.modules;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.notepad.database.NotepadDatabase;
 import com.example.notepad.database.entity.CategoryDao;
@@ -18,7 +15,6 @@ import com.example.notepad.di.scopes.ApplicationScoped;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.schedulers.Schedulers;
 
 
 @Module
@@ -27,10 +23,9 @@ public class RoomModule {
     private NotepadDatabase mNotepadDatabase;
 
     public RoomModule(Application application) {
-        //TODO call on another thread
         mNotepadDatabase =
-                Room.databaseBuilder(application, NotepadDatabase.class, "notepad_db")
-                        .allowMainThreadQueries()
+                Room.databaseBuilder(application, NotepadDatabase.class, NotepadDatabase.DB_NAME)
+                        .addMigrations(NotepadDatabase.MIGRATION_1_2)
                         .build();
     }
 

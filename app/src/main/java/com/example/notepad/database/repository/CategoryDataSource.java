@@ -36,7 +36,7 @@ public class CategoryDataSource implements CategoryRepository {
     }
 
     @Override
-    public void deleteCategory(Category category) {
-        mCategoryDao.deleteCategory(category);
+    public void deleteCategory(int categoryId) {
+        mCategoryDao.deleteCategory(categoryId);
     }
 }

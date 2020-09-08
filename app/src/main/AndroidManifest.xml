@@ -4,12 +4,13 @@
 
     <application
         android:name=".MyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ui.activity.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,25 +18,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.notepage.NotePageActivity"
             android:label=""
             android:parentActivityName=".ui.activity.main.MainActivity" />
+
         <activity
             android:name=".ui.activity.category.CategoryActivity"
             android:label=""
             android:parentActivityName=".ui.activity.main.MainActivity" />
+
         <activity
             android:name=".ui.activity.search.SearchActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
+
         <activity
             android:name=".ui.activity.addnote.AddNoteActivity"
             android:label=""
             android:parentActivityName=".ui.activity.main.MainActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" />
+
         <activity
             android:name=".ui.activity.favourite.FavouriteActivity"
             android:parentActivityName=".ui.activity.main.MainActivity" />
+
         <activity
             android:name=".ui.activity.main.MainActivity"
             android:label="">

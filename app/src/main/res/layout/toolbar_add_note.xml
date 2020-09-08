@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorGrey"
@@ -18,9 +17,11 @@
         android:background="@null"
         android:hint="@string/hint_text_name"
         android:imeOptions="actionNext"
+        android:nextFocusForward="@+id/edit_text_note_content"
         android:inputType="text"
         android:selectAllOnFocus="false"
         android:singleLine="false"
         android:textColor="@color/colorWhite"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:importantForAutofill="no" />
 </androidx.appcompat.widget.Toolbar>

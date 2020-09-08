@@ -1,33 +1,30 @@
 package com.example.notepad.ui.activity.notepage;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.notepad.MyApplication;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Note;
 import com.example.notepad.ui.activity.main.MainActivity;
 
-import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
-public class NotePageActivity extends AppCompatActivity implements NotePageContract.View{
+public class NotePageActivity extends AppCompatActivity implements NotePageContract.View {
 
     public static final String EXTRA_NOTE_ID = "noteId";
     private final String TAG = "NotePageActivity";
@@ -58,14 +55,16 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
         setSupportActionBar(mToolbar);
         //Set back
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mNotePageComponent = MyApplication.appComponent.addNotePageComponent().build();
         mNotePageComponent.inject(this);
 
         mPresenter.setView(this);
 
-        int idNote = getIntent().getExtras().getInt(EXTRA_NOTE_ID);
+        int idNote = Objects.requireNonNull(getIntent().getExtras()).getInt(EXTRA_NOTE_ID);
         mPresenter.loadNoteData(idNote);
 
 
@@ -92,7 +91,7 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
                 mPresenter.onCLickRemoveNote();
                 break;
             case R.id.menu_note_edit:
-                mPresenter.onClickEditText();
+                mPresenter.onClickEditText(this);
                 break;
             case R.id.menu_note_favourite:
                 mPresenter.onClickFavourite(item);
@@ -104,22 +103,9 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        /*TODO set favourite item.
-        *
-        * if (!addedToFavorites) {
-        MenuItem mi = menu.findItem(R.id.ic_favorites_checked);
-        menu.removeItem(R.id.ic_favorites_checked);
-        mi.setIcon(R.drawable.ic_menu_favorites_unchecked);
-        mi.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        addedToFavorites = true;
+        MenuItem menuItem = menu.findItem(R.id.menu_note_favourite);
+        mPresenter.setFavouriteIconMenu(menuItem);
 
-    } else {
-        MenuItem mi = menu.findItem(R.id.ic_favorites_unchecked);
-        menu.removeItem(R.id.ic_favorites_unchecked);
-        mi.setIcon(R.drawable.ic_menu_favorites_checked);
-        mi.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        addedToFavorites = false;
-        * */
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -28,11 +28,13 @@ public interface NotePageContract {
 
         void onCLickRemoveNote();
 
-        void onClickEditText();
+        void onClickEditText(Context context);
 
         void onClickFavourite(MenuItem item);
 
         void loadNoteData(int id);
+
+        void setFavouriteIconMenu(MenuItem menuItem);
     }
 
     interface Model extends BaseContract.Model {

@@ -29,15 +29,18 @@
         android:gravity="top"
         app:itemTextColor="@color/colorWhite"
         android:hint="@string/hint_category_text"
-        android:layout_marginBottom="?attr/actionBarSize" />
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:autofillHints="@string/save_note"
+        android:inputType="text" />
     <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
         android:text="@string/save_note"
-        android:textSize="16dp"
-        android:background="@color/colorDarkGrey"/>
+        android:textSize="16sp"
+        android:background="@color/colorBlackGrey"
+        android:textColor="@color/colorWhite"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

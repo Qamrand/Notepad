@@ -1,10 +1,9 @@
 package com.example.notepad.ui.activity.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.notepad.MyApplication;
 import com.example.notepad.R;

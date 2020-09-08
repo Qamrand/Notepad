@@ -1,18 +1,13 @@
 package com.example.notepad.ui.activity.favourite;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.notepad.MyApplication;
 import com.example.notepad.R;
@@ -64,7 +59,7 @@ public class FavouriteActivity extends AppCompatActivity implements FavouriteCon
         toolbarName.setText(R.string.favourite_notes);
 
         addNoteRecyclerView();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     private void addNoteRecyclerView() {
@@ -88,37 +83,37 @@ public class FavouriteActivity extends AppCompatActivity implements FavouriteCon
     public void onStart() {
         super.onStart();
         mPresenter.loadFavouriteNotes();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mNoteListAdapter.clearData();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
+        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 }

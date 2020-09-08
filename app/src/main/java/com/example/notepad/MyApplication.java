@@ -8,8 +8,8 @@ import com.example.notepad.database.repository.CategoryRepository;
 import com.example.notepad.database.repository.NoteRepository;
 import com.example.notepad.di.components.AppComponent;
 import com.example.notepad.di.components.DaggerAppComponent;
-import com.example.notepad.di.modules.AppModule;
 import com.example.notepad.di.modules.RoomModule;
+import com.example.notepad.ui.activity.category.CategoryComponent;
 
 public class MyApplication extends Application {
 
@@ -20,6 +20,8 @@ public class MyApplication extends Application {
     public static CategoryRepository categoryRepository;
 
     public static NoteRepository noteRepository;
+
+    public static CategoryComponent categoryComponent;
 
     public MyApplication() {
     }
@@ -37,6 +39,7 @@ public class MyApplication extends Application {
         appComponent = DaggerAppComponent.builder()
                 .roomModule(new RoomModule(this))
                 .build();
+
 
         categoryRepository = appComponent.getCategoryRepository();
 

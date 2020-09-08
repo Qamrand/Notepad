@@ -16,5 +16,5 @@ public interface CategoryRepository {
 
     void updateCategory(Category category);
 
-    void deleteCategory(Category category);
+    void deleteCategory(int categoryId);
 }

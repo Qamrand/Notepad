@@ -10,11 +10,15 @@ import io.reactivex.Flowable;
 public interface MainContract {
 
     interface Model extends BaseContract.Model{
-        Flowable showAllNotes();
+        Flowable<List<Note>> getAllNotes();
+
+        Flowable<List<Note>> getAllNotesByCategory(String category);
     }
 
     interface Presenter extends BaseContract.Presenter {
         void loadData();
+
+        void loadDataByCategory(String category);
     }
 
     interface View extends BaseContract.View{

@@ -1,7 +1,5 @@
 package com.example.notepad.ui.activity.splash;
 
-import android.app.Activity;
-
 import com.example.notepad.BaseContract;
 
 public interface SplashContract {
@@ -18,6 +16,7 @@ public interface SplashContract {
          * start delay timer
          * Simulate a long loading process on application startup.
          */
+
         void onSplashInit();
 
         /**

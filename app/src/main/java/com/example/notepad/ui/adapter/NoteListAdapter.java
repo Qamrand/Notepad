@@ -3,6 +3,7 @@ package com.example.notepad.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notepad.MyApplication;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Note;
 import com.example.notepad.ui.activity.notepage.NotePageActivity;
@@ -26,6 +28,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Completable;
+import io.reactivex.schedulers.Schedulers;
 
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteViewHolder> {
 
@@ -49,12 +53,19 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-        if(mNoteList.get(position).getIsFavourite() == 0)
+        if (mNoteList.get(position).getIsFavourite() == 0)
             holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_border);
         else
             holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_full);
 
-        holder.mTextCategoryItem.setText(mNoteList.get(position).getMCategory());
+        for(Note note: mNoteList)
+            Log.d("LOG_NOTE_ADAPTER", note.toString());
+
+
+            holder.mTextCategoryItem.setText(mNoteList.get(position).getMCategory());
+
+
+
         holder.mTextNameItem.setText(mNoteList.get(position).getMName());
 
         holder.mTextNameItem.setOnClickListener(view -> {
@@ -63,15 +74,19 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
             mContext.startActivity(intent);
         });
 
-
         holder.mImageFavouriteItem.setOnClickListener(view -> {
-            if (mNoteList.get(position).getIsFavourite() == R.drawable.ic_favourite_note_border) {
+            Note note = mNoteList.get(position);
+            if (note.getIsFavourite() == 0) {
                 holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_full);
-                mNoteList.get(position).setIsFavourite(R.drawable.ic_favourite_note_full);
+                note.setIsFavourite(1);
             } else {
                 holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_border);
-                mNoteList.get(position).setIsFavourite(R.drawable.ic_favourite_note_border);
+                note.setIsFavourite(0);
             }
+            Completable.fromAction(() -> MyApplication.noteRepository
+                    .updateNote(note))
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
         });
     }
 
@@ -90,7 +105,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         mNoteList.clear();
     }
 
-    public GridLayoutManager setGridLayoutManager(Context context){
+    public GridLayoutManager setGridLayoutManager(Context context) {
         GridLayoutManager gridLayoutManager;
         //if the orientation is portrait - draw two columns in the GridLayoutManager
         //if the orientation is landscape - three columns

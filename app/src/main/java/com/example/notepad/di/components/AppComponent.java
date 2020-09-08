@@ -25,9 +25,7 @@ public interface AppComponent {
     NotepadDatabase getNotepadDatabase();
 
     //Dao
-    CategoryDao getCategoryDao();
     CategoryRepository getCategoryRepository();
-    NoteDao getNoteDao();
     NoteRepository getNoteRepository();
 
     //Components

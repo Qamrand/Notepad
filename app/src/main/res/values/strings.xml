@@ -21,4 +21,6 @@
     <string name="add_category_title">Add category</string>
     <string name="dialog_category_add">Add</string>
     <string name="category_edit">EDIT</string>
+    <string name="add_category_button">Add new category</string>
+    <string name="empty_search_page">Empty search page</string>
 </resources>

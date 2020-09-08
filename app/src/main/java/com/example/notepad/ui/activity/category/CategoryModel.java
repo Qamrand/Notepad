@@ -15,7 +15,12 @@ public class CategoryModel implements CategoryContract.Model{
     }
 
     @Override
-    public void deleteCategory(Category category) {
-        MyApplication.categoryRepository.deleteCategory(category);
+    public void deleteCategory(int categoryId) {
+        MyApplication.categoryRepository.deleteCategory(categoryId);
+    }
+
+    @Override
+    public void insertCategory(Category category) {
+        MyApplication.categoryRepository.insertCategory(category);
     }
 }

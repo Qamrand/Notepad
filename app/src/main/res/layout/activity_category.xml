@@ -5,6 +5,7 @@
     android:id="@+id/category_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorDarkGrey"
     android:orientation="vertical"
     tools:context=".ui.activity.category.CategoryActivity">
 
@@ -22,19 +23,19 @@
         android:id="@+id/recycler_view_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
         android:layout_marginBottom="?attr/actionBarSize"
         android:background="@color/colorDarkGrey"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/add_category_button"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:text="@string/save_note"
-        android:textSize="16dp"
-        android:background="@color/colorBlackGrey"/>
+        android:text="@string/add_category_button"
+        android:textSize="16sp"
+        android:background="@color/colorBlackGrey"
+        android:textColor="@color/colorWhite"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -125,11 +125,6 @@ public class CategoryActivity extends AppCompatActivity implements CategoryContr
     }
 
     @Override
-    public String getCategoryName() {
-        return null;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mPresenter.loadData();

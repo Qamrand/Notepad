@@ -24,12 +24,20 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ *
+ */
 public class NotePageActivity extends AppCompatActivity implements NotePageContract.View {
 
+    //pass note id in the intent
     public static final String EXTRA_NOTE_ID = "noteId";
+
+    //for logcat
     private final String TAG = "NotePageActivity";
+
     private NotePageComponent mNotePageComponent;
 
+    //Initialize layout elements with ButterKnife annotations
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -42,6 +50,7 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
     @BindView(R.id.note_content)
     TextView noteContentTextView;
 
+    //inject NotePage presenter
     @Inject
     NotePageContract.Presenter mPresenter;
 
@@ -53,29 +62,35 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
         ButterKnife.bind(this);
         //set toolbar menu
         setSupportActionBar(mToolbar);
-        //Set back
+        //Set back button in toolbar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        //init NotePageComponent
         mNotePageComponent = MyApplication.appComponent.addNotePageComponent().build();
         mNotePageComponent.inject(this);
 
         mPresenter.setView(this);
 
+        //load note by id
         int idNote = Objects.requireNonNull(getIntent().getExtras()).getInt(EXTRA_NOTE_ID);
         mPresenter.loadNoteData(idNote);
-
-
     }
 
+    /**
+     * create menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_note, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * set actions for menu items
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -101,6 +116,9 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * set the favourite icon depending on the data from the database
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menuItem = menu.findItem(R.id.menu_note_favourite);
@@ -109,12 +127,14 @@ public class NotePageActivity extends AppCompatActivity implements NotePageContr
         return super.onPrepareOptionsMenu(menu);
     }
 
+
     @Override
     public void showNoteData(Note note) {
         noteNameTextView.setText(note.getMName());
         noteCategoryTextView.setText(note.getMCategory());
         noteContentTextView.setText(note.getMText());
     }
+
 
     @Override
     public void loadMain() {

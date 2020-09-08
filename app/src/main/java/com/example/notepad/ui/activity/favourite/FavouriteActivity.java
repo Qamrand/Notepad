@@ -59,11 +59,10 @@ public class FavouriteActivity extends AppCompatActivity implements FavouriteCon
         toolbarName.setText(R.string.favourite_notes);
 
         addNoteRecyclerView();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
+    //init recyclerview
     private void addNoteRecyclerView() {
-
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mNoteListAdapter.setGridLayoutManager(this));
         mRecyclerView.setAdapter(mNoteListAdapter);
@@ -83,37 +82,11 @@ public class FavouriteActivity extends AppCompatActivity implements FavouriteCon
     public void onStart() {
         super.onStart();
         mPresenter.loadFavouriteNotes();
-        //.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mNoteListAdapter.clearData();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //Log.d(TAG, new Object(){}.getClass().getEnclosingMethod().getName());
     }
 }

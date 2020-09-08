@@ -25,7 +25,8 @@ public class FavouritePresenter implements FavouriteContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(notes -> mView.showFavouriteNotes(notes),
-                        error -> mView.showError(error.getMessage()));
+                        error -> mView.showError(error.getMessage()))
+                .dispose();
     }
 
     @Override

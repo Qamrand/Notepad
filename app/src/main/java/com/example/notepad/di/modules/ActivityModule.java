@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * module for inject activity and activity context
+ */
 @Module
 public class ActivityModule {
 

@@ -16,7 +16,10 @@ public abstract class NotepadDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "notepad_db";
 
+    //Base db version
     public static final int VERSION_DB_1 = 1;
+
+    //last db version. Added autoincrement to the field id
     public static final int VERSION_DB_2 = 2;
 
 

@@ -7,10 +7,12 @@ import com.example.notepad.BaseContract;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class SplashPresenter implements SplashContract.Presenter {
 
     private SplashContract.View mView;
 
+    //display time in milliseconds
     private final long SPLASH_SCREEN_DELAY = 500;
 
     public SplashPresenter() {
@@ -30,16 +32,25 @@ public class SplashPresenter implements SplashContract.Presenter {
         timer.schedule(task, SPLASH_SCREEN_DELAY);
     }
 
+    /**
+     * load MainActivity after timer expires
+     */
     @Override
     public void onTimeFinished() {
         mView.loadMain();
     }
 
+    /**
+     * @param view the view associated with this presenter
+     */
     @Override
     public void setView(BaseContract.View view) {
         mView = (SplashContract.View) view;
     }
 
+    /**
+     * @param activity Drops the reference to the view when destroyed
+     */
     @Override
     public void dropView(Activity activity) {
         activity.finish();

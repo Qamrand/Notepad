@@ -8,6 +8,9 @@ import com.example.notepad.ui.activity.category.CategoryContract;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * DI module for provide NoteListAdapter and CategoryAdapter
+ */
 @Module
 public class AdapterModule {
 

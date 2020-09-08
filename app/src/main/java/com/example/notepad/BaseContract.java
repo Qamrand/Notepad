@@ -19,7 +19,7 @@ public interface BaseContract {
         void setView(View view);
 
         /**
-         *Drops the reference to the view when destroyed
+         *@param activity Drops the reference to the view when destroyed
          */
         void dropView(Activity activity);
     }

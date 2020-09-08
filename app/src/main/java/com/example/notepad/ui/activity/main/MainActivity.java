@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     private MainComponent mMainComponent;
+    //category name
     private String mTitle;
 
     //Declaring variables through the ButterKnife library
@@ -151,6 +152,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Toast.makeText(mContextApplication, message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * load notes by category.
+     * if category "All notes" - call loadData() method in presenter
+     *
+     * if category "No category" - call loadDataByCategory() method in presenter
+     * with empty string parameter
+     *
+     * for other categories - call loadDataByCategory() method in presenter
+     * with @mTitle parameter
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -164,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
+    /**
+     * clear list in adapter.
+     */
     @Override
     protected void onPause() {
         super.onPause();

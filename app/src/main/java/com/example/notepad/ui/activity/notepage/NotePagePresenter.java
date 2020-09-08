@@ -23,6 +23,7 @@ public class NotePagePresenter implements NotePageContract.Presenter {
     private NotePageContract.Model mModel;
     private NotePageContract.View mView;
 
+    //for onClickTextSize method. Defines text large or small.
     boolean isLargeText = false;
     private Note mNote;
 
@@ -43,8 +44,8 @@ public class NotePagePresenter implements NotePageContract.Presenter {
 
     @Override
     public void onClickSearch() {
-
     }
+
 
     @Override
     public void onCLickRemoveNote() {
@@ -60,17 +61,8 @@ public class NotePagePresenter implements NotePageContract.Presenter {
     public void onClickEditText(Context context) {
         Intent intent = new Intent(context, AddNoteActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        /*intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS_ID,
-                new Object[]{
-                        mNote.getMId(),
-                        mNote.getMName(),
-                        mNote.getMText(),
-                        mNote.getIsFavourite(),
-                        mNote.getMCategory(),
-                        mNote.getMCreatingDate(),
-                        mNote.getMModifyDate()
-        });*/
         intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS_ID, mNote);
+        //only for fast init fields in AddActivity
         intent.putExtra(AddNoteActivity.EXTRA_NOTE_EDIT_PARAMETERS,
                 new String[]{mNote.getMName(), mNote.getMText()});
         context.startActivity(intent);
@@ -87,6 +79,7 @@ public class NotePagePresenter implements NotePageContract.Presenter {
             favoriteNote = 0;
         }
         mNote.setIsFavourite(favoriteNote);
+
         Completable.fromAction(() -> mModel.updateNote(mNote))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
@@ -104,6 +97,7 @@ public class NotePagePresenter implements NotePageContract.Presenter {
                         error -> mView.showError(error.getMessage())).dispose();
     }
 
+
     @Override
     public void setFavouriteIconMenu(MenuItem menuItem) {
         if (mNote.getIsFavourite() == 0)
@@ -112,11 +106,17 @@ public class NotePagePresenter implements NotePageContract.Presenter {
             menuItem.setIcon(R.drawable.ic_favourite_note_full);
     }
 
+    /**
+     * @param view the view associated with this presenter
+     */
     @Override
     public void setView(BaseContract.View view) {
         mView = (NotePageContract.View) view;
     }
 
+    /**
+     * @param activity Drops the reference to the view when destroyed
+     */
     @Override
     public void dropView(Activity activity) {
         activity.finish();

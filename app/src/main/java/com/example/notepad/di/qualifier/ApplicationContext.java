@@ -5,6 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Qualifier;
 
+/**
+ *Annotation define a application context object
+ */
 @Qualifier
 @Retention(RetentionPolicy.CLASS)
 public @interface ApplicationContext {

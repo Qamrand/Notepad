@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.notepad.R;
 
+/**
+ * Unrealised note search activity
+ */
 public class SearchActivity extends AppCompatActivity {
 
     @Override

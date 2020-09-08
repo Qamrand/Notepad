@@ -1,7 +1,5 @@
 package com.example.notepad.database.repository;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.notepad.database.entity.Category;
 import com.example.notepad.database.entity.CategoryDao;
 
@@ -28,11 +26,6 @@ public class CategoryDataSource implements CategoryRepository {
     @Override
     public void insertCategory(Category category) {
         mCategoryDao.insertCategory(category);
-    }
-
-    @Override
-    public void updateCategory(Category category) {
-        mCategoryDao.updateCategory(category);
     }
 
     @Override

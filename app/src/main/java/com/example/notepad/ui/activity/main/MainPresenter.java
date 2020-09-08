@@ -3,14 +3,10 @@ package com.example.notepad.ui.activity.main;
 import android.app.Activity;
 
 import com.example.notepad.BaseContract;
-import com.example.notepad.database.entity.Note;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter implements MainContract.Presenter {

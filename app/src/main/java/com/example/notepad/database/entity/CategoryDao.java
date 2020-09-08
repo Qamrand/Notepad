@@ -4,7 +4,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
@@ -18,9 +17,6 @@ public interface CategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCategory(Category category);
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateCategory(Category category);
 
     @Query("DELETE from category WHERE id IN (:categoryId)")
     void deleteCategory(int categoryId);

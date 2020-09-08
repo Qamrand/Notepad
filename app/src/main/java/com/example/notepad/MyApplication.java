@@ -3,25 +3,22 @@ package com.example.notepad;
 import android.app.Activity;
 import android.app.Application;
 
-import com.example.notepad.database.NotepadDatabase;
 import com.example.notepad.database.repository.CategoryRepository;
 import com.example.notepad.database.repository.NoteRepository;
 import com.example.notepad.di.components.AppComponent;
 import com.example.notepad.di.components.DaggerAppComponent;
 import com.example.notepad.di.modules.RoomModule;
-import com.example.notepad.ui.activity.category.CategoryComponent;
 
+/**
+ * Main application class.
+ * Intended for initialization AppComponent
+ */
 public class MyApplication extends Application {
 
     public static AppComponent appComponent;
-
-    public static NotepadDatabase db;
-
     public static CategoryRepository categoryRepository;
-
     public static NoteRepository noteRepository;
 
-    public static CategoryComponent categoryComponent;
 
     public MyApplication() {
     }

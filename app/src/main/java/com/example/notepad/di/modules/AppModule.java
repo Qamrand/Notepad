@@ -9,6 +9,9 @@ import com.example.notepad.di.scopes.ApplicationScoped;
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Provide MyApplication class and Context
+ */
 @Module
 public class AppModule {
 

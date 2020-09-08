@@ -21,17 +21,30 @@ import butterknife.ButterKnife;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * Dialog Fragment for adding a new category.
+ * Contains one EditText field;
+ * Can be called to add a new category or edit an existing one
+ * Does not use MVP-architecture
+ */
 public class DialogAddCategoryFragment extends DialogFragment {
+
+    private Category mCategory = new Category();
 
     @BindView(R.id.category_name_dialog)
     public EditText nameCategory;
 
-    private Category mCategory = new Category();
+    public DialogAddCategoryFragment() {
+    }
 
+    /**
+     * The method can only be called to edit a category.
+     *
+     * @param category - this is an already existing category
+     */
     public void setCategory(Category category) {
         this.mCategory = category;
     }
-
 
     @NonNull
     @Override
@@ -47,7 +60,7 @@ public class DialogAddCategoryFragment extends DialogFragment {
                 .setPositiveButton(R.string.dialog_category_add,
                         ((dialogInterface, i) -> {
                             String name = nameCategory.getText().toString();
-                            if(!name.isEmpty()) {
+                            if (!name.isEmpty()) {
                                 mCategory.setMName(name);
                                 Completable.fromAction(() -> MyApplication.categoryRepository.insertCategory(mCategory))
                                         .subscribeOn(Schedulers.io())

@@ -24,9 +24,6 @@ public interface NoteDao {
     @Query("SELECT * FROM note WHERE favourite = 1")
     Flowable<List<Note>> getFavouriteNotes();
 
-    /**
-     * Передача по ИД через интент гарантирует, что данная NOTE существует.
-     */
     @Query("SELECT * FROM note WHERE id = (:id)")
     Single<Note> getNoteById(int id);
 

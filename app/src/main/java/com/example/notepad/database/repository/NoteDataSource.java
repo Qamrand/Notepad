@@ -1,7 +1,5 @@
 package com.example.notepad.database.repository;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.notepad.database.entity.Note;
 import com.example.notepad.database.entity.NoteDao;
 

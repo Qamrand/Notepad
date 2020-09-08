@@ -9,6 +9,9 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Note entity
+ */
 @AllArgsConstructor
 @Data
 @Entity(tableName = "note")

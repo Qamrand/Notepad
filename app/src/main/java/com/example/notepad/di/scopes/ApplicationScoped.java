@@ -5,6 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
 
+/**
+ * Application scope
+ */
 @Scope
 @Retention(RetentionPolicy.CLASS)
 public @interface ApplicationScoped {

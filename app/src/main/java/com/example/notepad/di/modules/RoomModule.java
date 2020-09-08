@@ -22,6 +22,10 @@ public class RoomModule {
 
     private NotepadDatabase mNotepadDatabase;
 
+    /**
+     * init room database
+     * @param application - main application class
+     */
     public RoomModule(Application application) {
         mNotepadDatabase =
                 Room.databaseBuilder(application, NotepadDatabase.class, NotepadDatabase.DB_NAME)
@@ -42,7 +46,6 @@ public class RoomModule {
     NoteDao providesNoteDao(NotepadDatabase notepadDatabase) {
         return notepadDatabase.getNoteDao();
     }
-
 
     @Provides
     @ApplicationScoped

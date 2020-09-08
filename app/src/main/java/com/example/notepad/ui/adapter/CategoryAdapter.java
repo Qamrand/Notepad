@@ -9,19 +9,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notepad.MyApplication;
 import com.example.notepad.R;
 import com.example.notepad.database.entity.Category;
-import com.example.notepad.database.entity.Note;
-import com.example.notepad.di.modules.ActivityModule;
-import com.example.notepad.ui.activity.category.CategoryActivity;
-import com.example.notepad.ui.activity.category.CategoryComponent;
 import com.example.notepad.ui.activity.category.CategoryContract;
 import com.example.notepad.ui.activity.main.MainActivity;
-import com.example.notepad.ui.fragment.DialogAddCategoryFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +30,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private Context mContext;
     private List<Category> mCategoryList;
+    /**
+     * id isVisibleEditButtons = true - display edit buttons in recyclerview elements
+     */
     private boolean isVisibleEditButtons;
     private CategoryContract.Presenter mPresenter;
 
@@ -60,6 +56,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.mTextView.setText(mCategoryList.get(position).getMName());
 
+        /*
+         * Show edit buttons if isVisibleEditButtons is true.
+         * Show edit buttons for all categories except categories "All notes" and "No category"
+         */
         if (isVisibleEditButtons &&
                 !(mCategoryList.get(position).getMName().equals("All notes")
                         || mCategoryList.get(position).getMName().equals("No category"))) {
@@ -70,22 +70,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         clickButtons(holder, position);
     }
 
+    /**
+     * for initialize onClick method in holder elements
+     * @param holder - one category
+     * @param position - position in recycler view
+     */
     private void clickButtons(@NonNull CategoryViewHolder holder, int position) {
 
         holder.mTextView.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
             //put category's name in intent
             intent.putExtra(MainActivity.EXTRA_CATEGORY_NAME, mCategoryList.get(position).getMName());
             mContext.startActivity(intent);
         });
 
+        //delete category
         holder.mRemoveButton.setOnClickListener(v -> Completable.fromAction(() ->
                 mPresenter.removeCategory(mCategoryList.get(position).getMId()))
                 .subscribeOn(Schedulers.io())
                 .subscribe());
 
+        //edit category
         holder.mEditButton.setOnClickListener(v ->
                 mPresenter.addNewCategory(mPresenter.getCategoryActivity(), mCategoryList.get(position)));
     }
@@ -95,9 +103,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return mCategoryList.size();
     }
 
+    /**
+     * initialize List<Category>
+     * @param categories - data from Room
+     */
     public void setData(List<Category> categories) {
         clearData();
         mCategoryList.addAll(categories);
+        //Notifies the attached observers that the underlying data has been changed
+        // and any View reflecting the data set should refresh itself.
         notifyDataSetChanged();
     }
 

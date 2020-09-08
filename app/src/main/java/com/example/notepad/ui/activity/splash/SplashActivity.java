@@ -11,6 +11,9 @@ import com.example.notepad.ui.activity.main.MainActivity;
 
 import javax.inject.Inject;
 
+/**
+ * Calls a splash screen when loading an application
+ */
 public class SplashActivity extends AppCompatActivity implements SplashContract.View{
 
     private SplashComponent splashComponent;

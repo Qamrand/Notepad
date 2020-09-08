@@ -51,6 +51,9 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         return new NoteViewHolder(cardView);
     }
 
+    /**
+     * initialize category holder elements
+     */
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         if (mNoteList.get(position).getIsFavourite() == 0)
@@ -58,13 +61,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         else
             holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_full);
 
-        for(Note note: mNoteList)
-            Log.d("LOG_NOTE_ADAPTER", note.toString());
-
-
-            holder.mTextCategoryItem.setText(mNoteList.get(position).getMCategory());
-
-
+        holder.mTextCategoryItem.setText(mNoteList.get(position).getMCategory());
 
         holder.mTextNameItem.setText(mNoteList.get(position).getMName());
 
@@ -83,6 +80,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
                 holder.mImageFavouriteItem.setImageResource(R.drawable.ic_favourite_note_border);
                 note.setIsFavourite(0);
             }
+
             Completable.fromAction(() -> MyApplication.noteRepository
                     .updateNote(note))
                     .subscribeOn(Schedulers.io())
@@ -95,9 +93,15 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         return mNoteList.size();
     }
 
+    /**
+     * initialize List<Note>
+     * @param notes - data from Room
+     */
     public void setData(List<Note> notes) {
         clearData();
         mNoteList.addAll(notes);
+        //Notifies the attached observers that the underlying data has been changed
+        // and any View reflecting the data set should refresh itself.
         notifyDataSetChanged();
     }
 
@@ -105,6 +109,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.NoteVi
         mNoteList.clear();
     }
 
+    /**
+     * Set LayoutManager in @param context
+     * @return GridLayoutManager depending on screen orientation
+     */
     public GridLayoutManager setGridLayoutManager(Context context) {
         GridLayoutManager gridLayoutManager;
         //if the orientation is portrait - draw two columns in the GridLayoutManager
